@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">POS</string>
+    <string name="portrait">portrait layout , turn to landscape</string>
+    <string name="btn1">All</string>
+    <string name="btn2">Favorite</string>
+    <string name="btn3">CKP</string>
+    <string name="btn4">GOAN</string>
+    <string name="btn5">Gujarati</string>
+    <string name="btn6">Kashmiri</string>
+    <string name="btn7">Nagpuri</string>
+    <string name="cal_txt">£ 5.00</string>
+    <string name="cal_txt2">cal</string>
+</resources>
