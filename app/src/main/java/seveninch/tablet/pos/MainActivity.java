@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
@@ -17,6 +20,11 @@ public class MainActivity extends AppCompatActivity {
     GridView gridView;
     ArrayList<Item> gridArray = new ArrayList<Item>();
     CustomGridViewAdapter customGridAdapter;
+    TableLayout tableLayout;
+    TextView Qty,Amt;
+
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         ckp = (Button)findViewById(R.id.btn_ckp);
         kash = (Button)findViewById(R.id.btn_kash);
         nag = (Button)findViewById(R.id.btn_nag);
+       tableLayout = (TableLayout)findViewById(R.id.tlayout);
 
         // First time trigger allgrid
 
@@ -85,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
         //remove trash values
         gridArray.removeAll(gridArray);
         // code to add to grid
-        gridArray.add(new Item("Sol Kadhi",1));
-        gridArray.add(new Item("Kolambi Fry",1));
-        gridArray.add(new Item("Chicken Rassa",1));
+        gridArray.add(new Item("Sol Kadhi", 1));
+        gridArray.add(new Item("Kolambi Fry", 1));
+        gridArray.add(new Item("Chicken Rassa", 1));
         gridArray.add(new Item("Banda Che Kalu", 1));
         gridArray.add(new Item("Mutton Xacuti", 2));
         gridArray.add(new Item("Pork Vindaloo", 2));
@@ -99,9 +108,9 @@ public class MainActivity extends AppCompatActivity {
         gridArray.add(new Item("Kashmiri Rogan",4));
         gridArray.add(new Item("Kashmiri Dahi B",4));
         gridArray.add(new Item("Vange Che Bhari", 5));
-        gridArray.add(new Item("Vada Bhat",5));
-        gridArray.add(new Item("Saoji chiken",5));
-        gridArray.add(new Item("Saoji mutton",5));
+        gridArray.add(new Item("Vada Bhat", 5));
+        gridArray.add(new Item("Saoji chiken", 5));
+        gridArray.add(new Item("Saoji mutton", 5));
 
         gridView = (GridView) findViewById(R.id.glayout);
         customGridAdapter = new CustomGridViewAdapter(this, R.layout.row_grid, gridArray);
@@ -213,6 +222,97 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), (CharSequence) gridArray.get(position).getDesc(), Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    public void addRow(String desc , Integer state){
+        Toast.makeText(getApplicationContext(),"row add method triger",Toast.LENGTH_SHORT).show();
+        Integer count = 0;
+        Integer each = 5;
+        count = count + 1;
+        Integer tmp = 0;
+        final TableRow tableRow = new TableRow(this);
+        tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
+        // Creation textView
+        final TextView text = new TextView(this);
+        text.setText(desc );
+        text.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+        final TextView tvState = new TextView(this);
+        String stname;
+        switch (state){
+            case 1:
+                stname ="CKP";
+                break;
+            case 2:
+                stname = "Goan";
+                break;
+            case 3:
+                stname = "Gujarat";
+                break;
+            case 4:
+                stname = "Kashmir";
+            case 5:
+                stname = "Nagpur";
+                break;
+            default:
+                stname = "state";
+                break;
+        }
+        tvState.setText(stname);
+        tvState.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+        Qty = new TextView(this);
+        Qty.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+        Qty.setText(String.valueOf(count));
+        // Creation  button
+        final Button button = new Button(this);
+        button.setText("+");
+        button.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //final TableRow parent = (TableRow) v.getParent();
+
+
+            }
+        });
+
+        final Button buttonM = new Button(this);
+        buttonM.setText("-");
+        buttonM.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+        buttonM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //final TableRow parent = (TableRow) v.getParent();
+               //tableLayout.removeView(parent);
+            }
+        });
+
+        final TextView tvEach = new TextView(this);
+        tvEach.setText("£5.00");
+        tvEach.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+        tmp = each * count;
+        Amt = new TextView(this);
+        Amt.setText(String.valueOf(tmp));
+        Amt.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+        tableRow.addView(text);
+        tableRow.addView(tvState);
+        tableRow.addView(button);
+        tableRow.addView(Qty);
+        tableRow.addView(buttonM);
+        tableRow.addView(tvEach);
+        tableRow.addView(Amt);
+        tableLayout.addView(tableRow);
+    }
+
+    public void updateAmount(){
+
+        //tmp = each * count;
+        Amt = new TextView(this);
+        //Amt.setText(String.valueOf(tmp));
+        Amt.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
 
     }
 
