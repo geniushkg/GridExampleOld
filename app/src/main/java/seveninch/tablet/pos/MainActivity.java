@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Item> gridArray = new ArrayList<Item>();
     CustomGridViewAdapter customGridAdapter;
     TableLayout tableLayout;
-    TextView Qty,Amt;
+
 
 
 
@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public  void gridAll(){
-
         //remove trash values
         gridArray.removeAll(gridArray);
         // code to add to grid
@@ -111,12 +110,9 @@ public class MainActivity extends AppCompatActivity {
         gridArray.add(new Item("Vada Bhat", 5));
         gridArray.add(new Item("Saoji chiken", 5));
         gridArray.add(new Item("Saoji mutton", 5));
-
         gridView = (GridView) findViewById(R.id.glayout);
         customGridAdapter = new CustomGridViewAdapter(this, R.layout.row_grid, gridArray);
         gridView.setAdapter(customGridAdapter);
-
-
     }
 
     public  void grid1(){
@@ -262,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
         tvState.setText(stname);
         tvState.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
 
-        Qty = new TextView(this);
+        TextView Qty = new TextView(this);
         Qty.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
         Qty.setText(String.valueOf(count));
         // Creation  button
@@ -272,9 +268,17 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //final TableRow parent = (TableRow) v.getParent();
-
-
+                final TableRow parent = (TableRow) v.getParent();
+                TextView itemsQty = (TextView) parent.getChildAt(3);
+                String Qty = itemsQty.getText().toString();
+                Integer countQty = Integer.valueOf(Qty);
+                countQty = countQty + 1;
+                itemsQty.setText(String.valueOf(countQty));
+                Integer tmpA = 0;
+                Integer each = 5;
+                tmpA = each * countQty;
+                TextView itemAmt = (TextView) parent.getChildAt(6);
+                itemAmt.setText(String.valueOf(tmpA));
             }
         });
 
@@ -284,19 +288,38 @@ public class MainActivity extends AppCompatActivity {
         buttonM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //final TableRow parent = (TableRow) v.getParent();
-               //tableLayout.removeView(parent);
+
+                final TableRow parent = (TableRow) v.getParent();
+                TextView itemsQty = (TextView) parent.getChildAt(3);
+                String Qty = itemsQty.getText().toString();
+                Integer countQty = Integer.valueOf(Qty);
+                countQty = countQty - 1;
+                itemsQty.setText(String.valueOf(countQty));
+                Integer tmpA = 0;
+                Integer each = 5;
+                tmpA = each * countQty;
+                TextView itemAmt = (TextView) parent.getChildAt(6);
+                itemAmt.setText(String.valueOf(tmpA));
             }
         });
-
         final TextView tvEach = new TextView(this);
         tvEach.setText("£5.00");
         tvEach.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-
         tmp = each * count;
-        Amt = new TextView(this);
+        TextView Amt = new TextView(this);
         Amt.setText(String.valueOf(tmp));
         Amt.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+        final Button buttonX = new Button(this);
+        buttonX.setText("X");
+        buttonX.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+        buttonX.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final TableRow parent = (TableRow) v.getParent();
+                tableLayout.removeView(parent);
+            }
+        });
         tableRow.addView(text);
         tableRow.addView(tvState);
         tableRow.addView(button);
@@ -304,18 +327,8 @@ public class MainActivity extends AppCompatActivity {
         tableRow.addView(buttonM);
         tableRow.addView(tvEach);
         tableRow.addView(Amt);
+        tableRow.addView(buttonX);
         tableLayout.addView(tableRow);
     }
-
-    public void updateAmount(){
-
-        //tmp = each * count;
-        Amt = new TextView(this);
-        //Amt.setText(String.valueOf(tmp));
-        Amt.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-
-    }
-
-
  }
 
